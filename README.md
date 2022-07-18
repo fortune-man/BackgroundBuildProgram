@@ -1,91 +1,20 @@
 ![컴퓨터 프로그램의 구조와 해석](https://image.aladin.co.kr/product/7512/20/cover500/8966261701_1.jpg)
 
-## 출처  
-- [컴퓨터 프로그램의 구조와 해석](https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=75122015)
-- [냥린이님velog](https://velog.io/@bae12/Parameter-Passing)
-
----
-
+### 줄여서 SICP
+Structure and Interpretation of Computer Programs
+이 책의 내용은 컴퓨터 프로그램의 구조 + 설명이라고 합니다.
+가장 밑바탕 부터 배울 수 있어 무척 기쁩니다.
 
 
-### procedure definition
-이전에 알아본 좋은 프로그래밍 언어가 갖추어야 할 목록
-- 수와 산술 연산이 기본 데이터, 기본 프로시저다.
-- 엮은식을 겹쳐 쓰는 것이 여러 연산을 한데 묶는 수단이 된다.
-- 이름과 값을 짝 지워 정의한 것이 모자르나마 요약하는 수단이 된다.
-이번엔 프로시저를 어떻게 정의하는지 배워보자.
-프로시저 정의 : compound operation(복잡한 연산)에 이름을 붙여서 쓰는 방법, 큰 프로그램을 짤 때 아주 쓸모가 많다고 한다.
+### 이 책을 고른 이유 
+너무나도 방대한 지식과 매번 업데이트되는 트렌드의 소식 들 속에서 오랫동안 많은 좌절, 상실, 어려움과 해결, 고민을 했습니다.
+장래에 훌륭한 개발자를 꿈꾸는 인간으로써 
+어떤 지식이 가장 중요한 것일지, 가장 좋은 선택일지에 대해 
+스스로 질문하고 내린 결론은
+가장 기초적인 원칙을 추적하는 것이었습니다.
+우선 매번 변화하는 트렌드에 비해 그것의 뿌리가 되는 가장 기초 원칙은 변하지 않을 것이라고 생각했고,
+비유나 개념, 은유 등으로 추상적인 표현만으로 학습하는데 한계를 느껴 직관적으로 가장 중요한 것, 요약되지 않고 특정한 사실이 기록되어있는 것들을 쫓다보니 이 책이 구매목록에 추가되었습니다.
 
----
-
-### square
-"제곱"을 어떻게 나타내는지 살펴보면서 배워보자.
->
-수를 제곱하는 방법
-'어떤 값을 제곱하려면, 같은 값을 두 번 곱한다.'
-
-이런 생각을 컴퓨터에 옮겨보면 다음과 같다
-```scheme
-;;; to square something, multiply it by itself.
-(define (square x) (* x x))
-
-```
-sqaure라고 하는 이미 있던 다른 프로시저(define)를 하나로 묶어서 만든 compound procedure(묶음 프로시저)가 하나 생겼다.
-
->
-- 정의에 따라 값을 두 번 곱하는 연산
-- 곱할 값을 x라는 local name(갇힌 이름)으로 받아오는데, 자연어에서 대명사와 쓰임새가 비슷하다.
-- 이 프로시저 정의를 계산한 결과로, 새로운 묶음 프로시저가 하나 생기고, 그 이름을 square라고 지었다.
-
-프로시저를 정의하는 문법은 다음과 같다
-```
-(define ([name][formal parameters]) [body])
-```
-- name : 환경에서 프로시저를 가리키는 이름
-- formal parameters : 프로시저가 받아오는 인자를 가리키기 위해서 프로시저의 몸 속에서 쓰는 이름
-  - [what is differenece between formal paramters and actual parameters?](https://velog.io/@bae12/Parameter-Passing)
-- body : 인자 이름을 넘겨받아 값으로 맞바꾼 다음, 그 식의 값을 도출
-- name과 formal paramters를 괄호로 묶어 놓은 이유는 인자를 주고 프로시저를 불러 쓰는 문법과 생김새가 똑같아서 라고함
----
-
-### sqaure 사용
-
-앞서 정의한 square를 사용하며 재귀를 활용한 compound procedure의 원리와 구조를 음미해보자.
-```scheme
-;: (square 21)
-;;; 441
-;: (square (+ 2 5))
-;;; 49
-;: (square (square 3))
-;;; 81
-```
-
-square를 만들 때 *라는 기본 프로시저를 썼듯이 square 또한 다른 프로시저를 정의할 때 쓸 수 있다.
-```scheme
-;;; x² + y²
-;; (+ (sqaure x) (square y))
-```
-이 식에 이름을 붙이면?
-``` scheme
-(define (sum-of-squares))
-	(+ (square x) (square y)
-    
-(sum-of-squares 3 4)
-;;; 25
-```
-
-두 인자를 받아 제각기 제곱하여 더하는 프로시저 완성!
-
-
-마찬가지로 sum-of-squares 또한 다른 프로시저를 정의할 때 쓸 수 있다.
-```scheme
-(define f a)
-	(sum-of-squares (+ a 1) ( * a 2)
-    
-(f 5)
-;;; 136 (6² + 10²)
-```
-
-묶음 프로시저든 기본 프로시저든 쓰는 방법은 같다.
-앞에서 sum-of-squares 프로시저의 정의만 놓고 보면,
- 그 몸 속에서 square라는 프로시저가 +나 *처럼 실행기에 처음부터 들어 있던 것인지, 아니면 새로 만든 것인지 구별하지 못한다.
+아주 어렵고 쓰이지 않는 지식이라고도 하고,
+MIT에서 교육하는 세계 최고 수준 학생들의 교육과정이라는 것이 조금 두렵지만,
+저의 미래를 위해 쌓아가고 있는 지식 기반의 좋은 양분이 되기를 바랍니다. 😀
